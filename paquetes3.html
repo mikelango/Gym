@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!--
+    PROYECTO: Sitio web de gimnasio (una sola página)
+    OBJETIVO: Promocionar paquetes, brindar información, horarios y sucursales, y facilitar el contacto.
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gimnasio FitLife — Salud, Fuerza y Energía</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primario: #1b5e20;   /* Verde salud */
+      --color-oscuro:   #232323;   /* Gris carbón */
+      --color-acento:   #ff8f00;   /* Naranja energía */
+      --color-fondo:    #f6f7f8;   /* Fondo claro */
+      --radio: 16px;
+      --shadow: 0 10px 20px rgba(0,0,0,.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Arial, sans-serif; color: #333; background: var(--color-fondo); }
+
+    /* Header / Nav */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand__logo {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primario), #2e7d32);
+      display: grid; place-items: center; color: #fff; font-weight: 800; font-family: 'Montserrat', sans-serif;
+    }
+    .brand__name { color: var(--color-oscuro); font-weight: 800; letter-spacing: .3px; font-family: 'Montserrat', sans-serif; }
+    nav a { color: var(--color-oscuro); text-decoration: none; margin: 0 10px; font-weight: 600; }
+    nav a:hover { color: var(--color-primario); }
+
+    /* Hero */
+    .hero {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center;
+      padding: 60px 20px; background: #fff;
+    }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 5vw, 48px); margin: 0 0 10px; color: var(--color-oscuro); }
+    .hero p { font-size: clamp(16px, 2.2vw, 18px); color: #555; margin: 0 0 24px; }
+    .cta {
+      display: inline-block; background: var(--color-acento); color: #fff; text-decoration: none;
+      padding: 12px 22px; border-radius: 999px; font-weight: 700; letter-spacing: .2px; box-shadow: var(--shadow);
+    }
+    .cta:hover { transform: translateY(-1px); }
+    .hero__img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radio);
+      box-shadow: var(--shadow);
+    }
+
+    /* Sección genérica */
+    section { padding: 60px 20px; }
+    section h2 { font-family: 'Montserrat', sans-serif; color: var(--color-primario); font-size: clamp(24px, 3.6vw, 34px); margin-top: 0; }
+    .sub { color: #666; margin-top: -8px; }
+
+    /* Paquetes */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card {
+      background: #fff; border-radius: var(--radio); box-shadow: var(--shadow); padding: 24px; display: grid; gap: 10px; align-content: start;
+    }
+    .card h3 { font-family: 'Montserrat', sans-serif; margin: 0; color: var(--color-oscuro); }
+    .precio { font-size: 28px; font-weight: 800; color: var(--color-oscuro); }
+    .lista { margin: 0; padding-left: 18px; line-height: 1.7; color: #444; }
+    .btn {
+      background: var(--color-primario); color: #fff; border: 0; border-radius: 12px; padding: 12px 16px; font-weight: 700; cursor: pointer;
+    }
+    .btn--alt { background: var(--color-acento); }
+
+    /* Beneficios / Info */
+    .beneficios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .beneficio { background: #fff; border-radius: var(--radio); box-shadow: var(--shadow); padding: 20px; }
+
+    /* Sucursales */
+    .sucursales { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .sucursal { background: #fff; border-radius: var(--radio); box-shadow: var(--shadow); overflow: hidden; }
+    .sucursal img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .sucursal .box { padding: 16px; }
+    .mapa { width: 100%; height: 320px; border: 0; border-radius: var(--radio); box-shadow: var(--shadow); }
+
+    /* Contacto */
+    .contacto { background: linear-gradient(135deg, #e8f5e9, #fff); border-radius: var(--radio); box-shadow: var(--shadow); padding: 24px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    label { font-weight: 600; }
+    input, textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; }
+    textarea { resize: vertical; min-height: 120px; }
+
+    /* Footer */
+    footer { background: #111; color: #eee; padding: 30px 20px; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .beneficios { grid-template-columns: 1fr 1fr; }
+      .sucursales { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      nav { display: none; }
+      .cards { grid-template-columns: 1fr; }
+      .beneficios { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header & Nav -->
+  <header>
+    <div class="wrap nav">
+      <a href="#inicio" class="brand" aria-label="Volver al inicio">
+        <div class="brand__logo">FL</div>
+        <div class="brand__name">FitLife Gym</div>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="paquetes.html">Paquetes</a>
+        <a href="informacion.html">Información</a>
+        <a href="sucursales.html">Sucursales</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="inicio" class="wrap hero" role="main">
+    <div>
+      <h1>Entrena con propósito: <span style="color:var(--color-primario)">salud</span>, <span style="color:var(--color-oscuro)">fuerza</span> y <span style="color:var(--color-acento)">energía</span>.</h1>
+      <p>Únete a FitLife y alcanza tus metas con planes flexibles, entrenadores certificados y equipos de alto rendimiento.</p>
+      <a class="cta" href="#paquetes">Ver paquetes</a>
+    </div>
+    <img class="hero__img" src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74?q=80&w=1600&auto=format&fit=crop" alt="Personas entrenando en gimnasio" />
+  </main>
+
+  <!-- Paquetes -->
+  <section id="paquetes" class="wrap">
+    <h2>Paquetes</h2>
+    <p class="sub">Planes pensados para tu objetivo y estilo de vida.</p>
+    <div class="cards" role="list">
+      <article class="card" role="listitem">
+        <h3>Básico</h3>
+        <p class="precio">$299 / mes</p>
+        <ul class="lista">
+          <li>Acceso a área de pesas y cardio</li>
+          <li>Inducción inicial</li>
+          <li>Lockers y regaderas</li>
+        </ul>
+        <button class="btn" aria-label="Elegir paquete Básico">Elegir Básico</button>
+      </article>
+
+      <article class="card" role="listitem">
+        <h3>Premium</h3>
+        <p class="precio">$499 / mes</p>
+        <ul class="lista">
+          <li>Todo lo del Básico</li>
+          <li>Clases grupales ilimitadas</li>
+          <li>2 asesorías mensuales</li>
+        </ul>
+        <button class="btn btn--alt" aria-label="Elegir paquete Premium">Elegir Premium</button>
+      </article>
+
+      <article class="card" role="listitem">
+        <h3>VIP</h3>
+        <p class="precio">$799 / mes</p>
+        <ul class="lista">
+          <li>Todo lo del Premium</li>
+          <li>Entrenador personal 1:1</li>
+          <li>Plan nutricional personalizado</li>
+        </ul>
+        <button class="btn" aria-label="Elegir paquete VIP">Elegir VIP</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Carrito -->
+  <div id="carrito" style="
+    position: fixed; top: 80px; right: 20px; background: #fff; 
+    border-radius: 12px; box-shadow: 0 6px 14px rgba(0,0,0,.15); 
+    padding: 16px; width: 260px; font-size: 14px; z-index: 100;
+  ">
+    <h4 style="margin-top:0; font-family: 'Montserrat', sans-serif;">🛒 Carrito</h4>
+    <ul id="carrito-lista" style="list-style:none; padding-left:0; margin:0 0 10px;"></ul>
+    <p><strong>Total: </strong><span id="carrito-total">$0</span></p>
+    <button onclick="vaciarCarrito()" class="btn" style="width:100%;">Vaciar carrito</button>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p>© <span id="year"></span> FitLife Gym · Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    // Actualiza año automáticamente
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const carrito = [];
+    const carritoLista = document.getElementById("carrito-lista");
+    const carritoTotal = document.getElementById("carrito-total");
+
+    // Agregar paquete al carrito
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      renderCarrito();
+    }
+
+    // Mostrar carrito
+    function renderCarrito() {
+      carritoLista.innerHTML = "";
+      let total = 0;
+      carrito.forEach((item, i) => {
+        total += item.precio;
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        carritoLista.appendChild(li);
+      });
+      carritoTotal.textContent = `$${total}`;
+    }
+
+    // Vaciar carrito
+    function vaciarCarrito() {
+      carrito.length = 0;
+      renderCarrito();
+    }
+
+    // Botones
+    document.querySelector('[aria-label="Elegir paquete Básico"]').addEventListener("click", () => {
+      agregarAlCarrito("Paquete Básico", 299);
+    });
+    document.querySelector('[aria-label="Elegir paquete Premium"]').addEventListener("click", () => {
+      agregarAlCarrito("Paquete Premium", 499);
+    });
+    document.querySelector('[aria-label="Elegir paquete VIP"]').addEventListener("click", () => {
+      agregarAlCarrito("Paquete VIP", 799);
+    });
+  </script>
+</body>
+</html>
